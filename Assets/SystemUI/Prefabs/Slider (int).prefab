@@ -61,7 +61,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.40784317, g: 0.40784317, b: 0.40784317, a: 1}
+  m_Color: {r: 0.16470589, g: 0.16470589, b: 0.16470589, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -814,8 +814,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 2.5, y: 0}
+  m_SizeDelta: {x: -5, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4660354599137225107
 CanvasRenderer:
@@ -885,8 +885,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.25}
   m_AnchorMax: {x: 1, y: 0.75}
-  m_AnchoredPosition: {x: -2.500001, y: 0}
-  m_SizeDelta: {x: -14.999998, y: 0}
+  m_AnchoredPosition: {x: -3.75, y: 0}
+  m_SizeDelta: {x: -12.5, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &3944420281809500979
 GameObject:
@@ -2169,7 +2169,7 @@ PrefabInstance:
     - target: {fileID: 2063310153295867966, guid: fed960030f4ae624e978d4ffaa8f5461,
         type: 3}
       propertyPath: m_Name
-      value: Slider (float)
+      value: Slider (int)
       objectReference: {fileID: 0}
     - target: {fileID: 2063310153295867967, guid: fed960030f4ae624e978d4ffaa8f5461,
         type: 3}

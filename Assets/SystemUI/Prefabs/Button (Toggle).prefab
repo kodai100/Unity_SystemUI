@@ -113,10 +113,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4367421892786722190, guid: e678b59a1febf5a41a1e64d889c321e8,
+        type: 3}
+      propertyPath: m_text
+      value: Toggle
+      objectReference: {fileID: 0}
     - target: {fileID: 7493802214833531979, guid: e678b59a1febf5a41a1e64d889c321e8,
         type: 3}
       propertyPath: m_Name
-      value: Button (OneShot)
+      value: Button (Toggle)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
