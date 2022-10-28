@@ -365,6 +365,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1125638462086327519}
   - component: {fileID: 7851239590667479441}
+  - component: {fileID: 1909179325761021727}
+  - component: {fileID: 2710301955849121133}
   m_Layer: 5
   m_Name: Button (OneShot)
   m_TagString: Untagged
@@ -413,3 +415,32 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &1909179325761021727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7493802214833531979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b5e3bbefcf68a34ba77ec391fab9e3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Interactable: 1
+  _button: {fileID: 3099728820082422822}
+--- !u!114 &2710301955849121133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7493802214833531979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f93c7a093216e42b532a6214c23cf1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _label: Button (OneShot)
+  _labelText: {fileID: 4367421892786722190}
+  _field: {fileID: 1909179325761021727}
