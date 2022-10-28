@@ -380,9 +380,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_IgnoreLayout: 0
-  m_MinWidth: 100
+  m_MinWidth: 70
   m_MinHeight: -1
-  m_PreferredWidth: 100
+  m_PreferredWidth: 70
   m_PreferredHeight: -1
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
@@ -580,7 +580,7 @@ PrefabInstance:
     - target: {fileID: 2063310153295867967, guid: fed960030f4ae624e978d4ffaa8f5461,
         type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 2063310153295867967, guid: fed960030f4ae624e978d4ffaa8f5461,
         type: 3}
@@ -731,6 +731,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2063310155003328823, guid: fed960030f4ae624e978d4ffaa8f5461,
+        type: 3}
+      propertyPath: m_text
+      value: Parameter (Bool)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects:

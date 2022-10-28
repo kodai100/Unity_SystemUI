@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
 
@@ -9,6 +8,7 @@ namespace inc.stu.SystemUI
     {
         [SerializeField] private Parameter<float> _fieldFloat;
         [SerializeField] private Parameter<int> _fieldInt;
+        [SerializeField] private Parameter<Vector2> _fieldVector2;
         [SerializeField] private Parameter<Vector3> _fieldVector3;
         [SerializeField] private Parameter<string> _fieldString;
         [SerializeField] private Parameter<bool> _fieldBool;
@@ -20,22 +20,26 @@ namespace inc.stu.SystemUI
         [SerializeField] private Parameter<bool> _buttonOneShot;
         [SerializeField] private Parameter<bool> _buttonToggle;
 
+        [SerializeField] private Console _console;
 
         private void Start()
         {
+            
+            Application.logMessageReceived += OnLogMessage;
 
-            // ParameterTest(_fieldFloat, 100);
-            // ParameterTest(_fieldInt, 1508);
-            // ParameterTest(_fieldVector3, Vector3.one);
-            // ParameterTest(_fieldString, "Hello!");
-            // ParameterTest(_fieldBool, false);
-            // ParameterTest(_fieldFile, "file://");
+            ParameterTest(_fieldFloat, 100);
+            ParameterTest(_fieldInt, 1508);
+            ParameterTest(_fieldVector2, Vector2.one);
+            ParameterTest(_fieldVector3, Vector3.one);
+            ParameterTest(_fieldString, "Hello!");
+            ParameterTest(_fieldBool, false);
+            ParameterTest(_fieldFile, "file://");
             
             ParameterTest(_sliderFloat, 0.5f);
             ParameterTest(_sliderInt, 4);
             
-            // ParameterTest(_buttonOneShot, true);
-            // ParameterTest(_buttonToggle, true);
+            ParameterTest(_buttonOneShot, true);
+            ParameterTest(_buttonToggle, true);
             
         }
 
@@ -53,6 +57,42 @@ namespace inc.stu.SystemUI
             
             // we can get value directly
             Debug.Log($"{typeof(T).Name} - Direct : {parameter.Field.Value}");
+        }
+        
+        
+        private void OnLogMessage( string logText, string stackTrace, LogType logType )
+        {
+            if( string.IsNullOrEmpty( logText ) )
+            {
+                return;
+            }
+
+            switch (logType)
+            {
+                case LogType.Log : 
+                    _console.Log(logText); 
+                    return;
+                case LogType.Error:
+                    _console.Error(logText);
+                    return;
+                case LogType.Assert:
+                    _console.Log(logText);
+                    return;
+                case LogType.Exception:
+                    _console.Error(logText);
+                    return;
+                case LogType.Warning:
+                    _console.Warning(logText);
+                    return;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(logType), logType, null);
+            }
+        } 
+
+
+        private void OnDestroy()
+        {
+            Application.logMessageReceived -= OnLogMessage;
         }
     }
 
