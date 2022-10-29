@@ -1,0 +1,12 @@
+{
+  "author": "Kodai Takao",
+  "name": "inc.stu.system-ui",
+  "displayName": "System UI",
+  "version": "1.0.0",
+  "unity": "2022.1",
+  "description": "System UI package for unity uGUI.",
+  "keywords": [
+    "Script"
+  ],
+  "unityRelease": "4f1"
+}
