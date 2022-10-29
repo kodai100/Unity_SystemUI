@@ -32,7 +32,7 @@ namespace inc.stu.SystemUI
             ParameterTest(_fieldVector2, Vector2.one);
             ParameterTest(_fieldVector3, Vector3.one);
             ParameterTest(_fieldString, "Hello!");
-            ParameterTest(_fieldBool, false);
+            ParameterTest(_fieldBool, true);
             ParameterTest(_fieldFile, "file://");
             
             ParameterTest(_sliderFloat, 0.5f);

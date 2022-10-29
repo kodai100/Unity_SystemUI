@@ -12,19 +12,32 @@ namespace inc.stu.SystemUI
         [SerializeField] private TMP_InputField _inputField;
         [SerializeField] private Button _button;
         
-        private readonly ReactiveProperty<string> _value = new();
-        public override string Value => _value.Value;
-        public override IObservable<string> OnValueChanged => _value;
+        private readonly Subject<string> _onValueChanged = new();
 
-        public IObservable<Unit> OnClickedAsObservable => _button.OnClickAsObservable();
+        private string _value;
+        public override string Value => _value;
+        public override IObservable<string> OnValueChanged => _onValueChanged;
 
+        protected override void Awake()
+        {
+            base.Awake();
+
+            _button.OnClickAsObservable().Subscribe(_ =>
+            {
+                _onValueChanged.OnNext("");
+            }).AddTo(this);
+        }
+        
         public override void SetValueWithNotify(string value)
         {
-            _inputField.text = value;
+            _value = value;
+            _inputField.SetTextWithoutNotify(value);
+            _onValueChanged.OnNext(value);
         }
 
         public override void SetValueWithoutNotify(string value)
         {
+            _value = value;
             _inputField.SetTextWithoutNotify(value);
         }
     }
