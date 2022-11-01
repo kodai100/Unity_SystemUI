@@ -43,16 +43,21 @@ namespace inc.stu.SystemUI
         }
 
         protected abstract T Parse(string value);
+        protected abstract string ValueToText(T value);
         
         public override void SetValueWithNotify(T value)
         {
-            _inputField.text = value.ToString();
-            _inputField.onEndEdit.Invoke(_inputField.text);
+            if (_value.Equals(value)) return;
+            
+            _value = value;
+            _inputField.SetTextWithoutNotify(ValueToText(value));
+            _subject.OnNext(_value);
         }
 
         public override void SetValueWithoutNotify(T value)
         {
-            _inputField.SetTextWithoutNotify(value.ToString());
+            _value = value;
+            _inputField.SetTextWithoutNotify(ValueToText(value));
         }
         
         protected override void Update()
