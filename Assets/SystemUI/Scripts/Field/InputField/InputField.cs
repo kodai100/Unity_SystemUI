@@ -47,8 +47,11 @@ namespace inc.stu.SystemUI
         
         public override void SetValueWithNotify(T value)
         {
-            if (_value.Equals(value)) return;
-            
+            if (_value != null)
+            {
+                if (_value.Equals(value)) return;
+            }
+
             _value = value;
             _inputField.SetTextWithoutNotify(ValueToText(value));
             _subject.OnNext(_value);
