@@ -38,7 +38,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 20, y: 0}
+  m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 1, y: 1}
 --- !u!222 &7179314365326528809
 CanvasRenderer:
@@ -1213,7 +1213,7 @@ MonoBehaviour:
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 1
+  m_ScrollSensitivity: 60
   m_Viewport: {fileID: 3518577125682893623}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 3804832621274404981}
@@ -1240,7 +1240,7 @@ PrefabInstance:
     - target: {fileID: 2063310153295867966, guid: fed960030f4ae624e978d4ffaa8f5461,
         type: 3}
       propertyPath: m_Name
-      value: Field (Dropdown)
+      value: Field (Enum Dropdown)
       objectReference: {fileID: 0}
     - target: {fileID: 2063310153295867967, guid: fed960030f4ae624e978d4ffaa8f5461,
         type: 3}
@@ -1449,6 +1449,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Interactable: 1
   _dropdown: {fileID: 8175546574498276968}
+--- !u!114 &4428775085452897138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4867586389336550812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb219b23cdf4b314f94a27bca3cc8012, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &4867586389463990860 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2063310154301829754, guid: fed960030f4ae624e978d4ffaa8f5461,
