@@ -8,7 +8,8 @@ namespace inc.stu.SystemUI
     {
         [SerializeField] private Parameter<float> _fieldFloat;
         [SerializeField] private Parameter<int> _fieldInt;
-        [SerializeField] private Parameter<TestDropdownEnum> _testEnumField;
+        [SerializeField] private Parameter<TestDropdownEnum> _testEnumDropdownField;
+        [SerializeField] private Parameter<(string, int)> _testStringArrayDropdownField;
         [SerializeField] private Parameter<Vector2> _fieldVector2;
         [SerializeField] private Parameter<Vector3> _fieldVector3;
         [SerializeField] private Parameter<string> _fieldString;
@@ -31,7 +32,8 @@ namespace inc.stu.SystemUI
             ParameterTest(_fieldFloat, 100);
             ParameterTest(_fieldInt, 1508);
             
-            ParameterTest(_testEnumField, TestDropdownEnum.Second);
+            ParameterTest(_testEnumDropdownField, TestDropdownEnum.Second);
+            ParameterTest(_testStringArrayDropdownField, ("Alice", 0));
             
             ParameterTest(_fieldVector2, Vector2.one);
             ParameterTest(_fieldVector3, Vector3.one);

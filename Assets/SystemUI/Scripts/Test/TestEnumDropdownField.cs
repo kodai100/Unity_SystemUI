@@ -9,7 +9,7 @@ namespace inc.stu.SystemUI
         First, Second, Third
     }
     
-    public class TestDropdownField : DropdownField<TestDropdownEnum>
+    public class TestEnumDropdownField : DropdownField<TestDropdownEnum>
     {
         protected override TestDropdownEnum ParseToEnum(int value)
         {

@@ -1444,23 +1444,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 4867586389336550812}
   m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 552f32cde3fb5714fbe13f89bea90526, type: 3}
+  m_Script: {fileID: 11500000, guid: f5a3b2117dd027941839ee18cc5c05ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Interactable: 1
   _dropdown: {fileID: 8175546574498276968}
---- !u!114 &7796845687525535906
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4867586389336550812}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb219b23cdf4b314f94a27bca3cc8012, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &4867586389463990860 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2063310154301829754, guid: fed960030f4ae624e978d4ffaa8f5461,
