@@ -411,8 +411,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: Alice
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5739f722d7131dd488ab5cfebd04ff6e, type: 2}
+  m_sharedMaterial: {fileID: -3381893547854477694, guid: 5739f722d7131dd488ab5cfebd04ff6e,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -974,7 +975,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: Option A
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5739f722d7131dd488ab5cfebd04ff6e, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -1451,6 +1452,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Interactable: 1
   _dropdown: {fileID: 8175546574498276968}
+--- !u!114 &3061365001034349344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4867586389336550812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 626782ae01c79d54198c8d971b755963, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Interactable: 1
+  _dropdown: {fileID: 8175546574498276968}
 --- !u!114 &7169723226142330654
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1501,4 +1516,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _label: Parameter (str drop)
   _labelText: {fileID: 4867586389630716161}
-  _field: {fileID: 2640079642547089869}
+  _field: {fileID: 3061365001034349344}

@@ -1,4 +1,5 @@
 using System;
+using inc.stu.SystemUI.MenuBar;
 using UniRx;
 using UnityEngine;
 
@@ -6,6 +7,9 @@ namespace inc.stu.SystemUI
 {
     public class Test : MonoBehaviour
     {
+        private TestFileMenu _testFileMenu = new();
+
+        [Header("Parameter")]
         [SerializeField] private Parameter<float> _fieldFloat;
         [SerializeField] private Parameter<int> _fieldInt;
         [SerializeField] private Parameter<TestDropdownEnum> _testEnumDropdownField;
@@ -26,9 +30,20 @@ namespace inc.stu.SystemUI
 
         private void Start()
         {
-            
-            Application.logMessageReceived += OnLogMessage;
+            SetupMenuBar();
+            SetupParameter();
+            SetupLogger();
+        }
 
+        private void SetupMenuBar()
+        {
+            MenuBarManager.Instance.ResetMenu();
+            _testFileMenu.Initialize();
+            MenuBarManager.Instance.UpdateMenu();
+        }
+
+        private void SetupParameter()
+        {
             ParameterTest(_fieldFloat, 100);
             ParameterTest(_fieldInt, 1508);
             
@@ -46,9 +61,13 @@ namespace inc.stu.SystemUI
             
             ParameterTest(_buttonOneShot, true);
             ParameterTest(_buttonToggle, true);
-            
         }
 
+        private void SetupLogger()
+        {
+            Application.logMessageReceived += OnLogMessage;
+        }
+        
         private void ParameterTest<T>(Parameter<T> parameter, T initialValue)
         {
             // First, register on value changed event

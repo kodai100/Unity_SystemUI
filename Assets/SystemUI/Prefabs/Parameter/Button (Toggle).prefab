@@ -193,3 +193,5 @@ MonoBehaviour:
   Interactable: 1
   _button: {fileID: 2796469669638532181}
   _isOn: 0
+  _disabledColor: {r: 0.32941177, g: 0.32941177, b: 0.32941177, a: 1}
+  _enabledColor: {r: 0.18867922, g: 0.09878959, b: 0.09878959, a: 1}
