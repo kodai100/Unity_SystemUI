@@ -25,13 +25,13 @@ namespace Previz.Hierarchy
 
         private List<HierarchyItemView> _instantiatedItems = new();
 
-        private Subject<HierarchyItemDropInEvent> _onItemDropInEvent = new();
+        private Subject<HierarchyItemDropInEvent> _onItemDroppedInEvent = new();
         private Subject<HierarchyItemInsertEvent> _onItemInsertEvent = new();
         private Subject<HierarchyItemData> _onClickItem = new();
         private Subject<HierarchyItemData> _onRightClickItem = new();
         public IObservable<HierarchyItemData> OnLeftClickItem => _onClickItem;
         public IObservable<HierarchyItemData> OnRightClickItem => _onRightClickItem;
-        public IObservable<HierarchyItemDropInEvent> OnDropInItem => _onItemDropInEvent;
+        public IObservable<HierarchyItemDropInEvent> OnItemDroppedIn => _onItemDroppedInEvent;
         public IObservable<HierarchyItemInsertEvent> OnInsertItem => _onItemInsertEvent;
 
         public void Initialize(List<HierarchyItemData> data, HierarchyMenuBase rightClickMenu, Camera uiCamera)
@@ -63,30 +63,24 @@ namespace Previz.Hierarchy
         {
             var list = new List<HierarchyItemData> { item };
 
-            // 挿入する階層の他のItemView
-            HierarchyItemView[] siblings = null;
-
-            HierarchyItemView addedItemView = null;
-
+            Transform parentTransform = null;
+            
             // Parentがいない場合、ルートに設置する
             if (parentView == null)
             {
                 InitializeItems(list, _rootRectTransform);
-                siblings = GetComponentsInChildren<HierarchyItemView>()
-                    .Where(x => x.transform.parent == _rootRectTransform.transform)
-                    .ToArray();
-                addedItemView = siblings.SingleOrDefault(x => x.ItemId == item.Id);
-                addedItemView!.transform.SetSiblingIndex(index);
-                return;
+                parentTransform = _rootRectTransform.transform;
             }
-
-            // ParentのChildrenRootRectに設置する
-            parentView.ShowChildren();
-            InitializeItems(list, parentView.ChildrenRootRect, parentView.Depth + 1);
-            siblings = parentView.GetComponentsInChildren<HierarchyItemView>()
-                .Where(x => x.transform.parent == parentView.transform)
-                .ToArray();
-            addedItemView = siblings.SingleOrDefault(x => x.ItemId == item.Id);
+            else
+            {
+                // ParentのChildrenRootRectに設置する
+                parentView.ShowChildren();
+                InitializeItems(list, parentView.ChildrenRootRect, parentView.Depth + 1);
+                parentTransform = parentView.ChildrenRootRect;
+            }
+            
+            var siblings = parentTransform.GetComponentsInChildren<HierarchyItemView>().Where(x => x.transform.parent == parentTransform).ToArray();
+            var addedItemView = siblings.SingleOrDefault(x => x.ItemId == item.Id);
             addedItemView!.transform.SetSiblingIndex(index);
         }
 
@@ -111,9 +105,9 @@ namespace Previz.Hierarchy
             // 削除の反映を待つ
             yield return null;
 
-            var parentView = GetComponentsInChildren<HierarchyItemView>()
-                .SingleOrDefault(x => x.ItemId == parentItemId);
+            var parentView = GetComponentsInChildren<HierarchyItemView>().SingleOrDefault(x => x.ItemId == parentItemId);
             AddItem(movedItem, index, parentView);
+
             if (parentView != null) parentView.HideHoverImage();
             UpdateSelectItem(movedItem.Id);
         }
@@ -182,9 +176,10 @@ namespace Previz.Hierarchy
             if (_isMouseOverBetweenItem)
             {
                 // 子を表示中の場合、InsertEventではなくMoveEventとして処理する
-                if (mouseOverView.IsShowChildren)
+                if (mouseOverView.IsShowChildren)   // TODO: そのさらに親が開いてるかどうか見ないとだめじゃない？
                 {
-                    _onItemDropInEvent.OnNext(new HierarchyItemDropInEvent()
+                    Debug.Log("Hi");
+                    _onItemDroppedInEvent.OnNext(new HierarchyItemDropInEvent()
                     {
                         MoveItemId = data.Id,
                         ParentItemId = mouseOverView.ItemId,
@@ -197,6 +192,7 @@ namespace Previz.Hierarchy
                 // parentがいない = ルートに挿入の場合
                 if (parent == null)
                 {
+                    Debug.Log(mouseOverView.ItemId);
                     _onItemInsertEvent.OnNext(new HierarchyItemInsertEvent()
                     {
                         AboveItemId = mouseOverView.ItemId,
@@ -215,11 +211,11 @@ namespace Previz.Hierarchy
 
             // 要素間ではない場合、mouseOverViewを直接親として扱う
             parent = mouseOverView;
-            _onItemDropInEvent.OnNext(new HierarchyItemDropInEvent()
+            _onItemDroppedInEvent.OnNext(new HierarchyItemDropInEvent()
             {
                 MoveItemId = data.Id,
                 ParentItemId = parent.ItemId,
-                Index = 0
+                Index = parent.ChildrenRootRect.transform.childCount
             });
         }
 
@@ -230,8 +226,6 @@ namespace Previz.Hierarchy
                 var view = Instantiate(_itemView, parentTransform);
                 view.Setup(itemData, depth);
                 _instantiatedItems.Add(view);
-
-                Debug.Log($"{itemData.Id} : {itemData.Name}");
                 
                 // 通常のクリック
                 view.OnLeftClick.Subscribe(_ => _onClickItem.OnNext(itemData)).AddTo(this);

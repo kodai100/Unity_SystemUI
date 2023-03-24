@@ -13,7 +13,7 @@ namespace inc.stu.SystemUI.Tests
         [SerializeField] private HierarchyView _hierarchyView;
         [SerializeField] private Camera _uiCamera;
         
-        public IObservable<HierarchyItemDropInEvent> OnItemMoved => _hierarchyView.OnDropInItem;
+        public IObservable<HierarchyItemDropInEvent> OnItemDroppedIn => _hierarchyView.OnItemDroppedIn;
         public IObservable<HierarchyItemInsertEvent> OnItemInserted => _hierarchyView.OnInsertItem;
         public IObservable<HierarchyItemData> OnSelectedItem => _hierarchyView.OnLeftClickItem.Merge(_hierarchyView.OnRightClickItem);
 
@@ -26,6 +26,7 @@ namespace inc.stu.SystemUI.Tests
                 ChildrenItems = x.Children?.Select(c => new HierarchyItemData{Id = c.Id, Name = c.Name}).ToList()
             } as HierarchyItemData).ToList();
             _hierarchyView.Initialize(hierarchyData, hierarchyMenu, _uiCamera);
+
         }
 
         public void UpdateSelectedItem(Guid id)
@@ -48,14 +49,14 @@ namespace inc.stu.SystemUI.Tests
             _hierarchyView.DeleteItem(entity.Id);
         }
 
-        public void InsertItem(HierarchyEntity entity, int index)
+        public void InsertItem(HierarchyEntity entity, Guid? parentId, int index)
         {
             var itemData = new HierarchyItemData()
             {
                 Id = entity.Id,
                 Name = entity.Name
             };
-            StartCoroutine(_hierarchyView.InsertItem(itemData, null, index));
+            StartCoroutine(_hierarchyView.InsertItem(itemData, parentId, index));
         }
 
         public void RenameFixture(Guid id, string name)

@@ -28,7 +28,7 @@ namespace Previz.Hierarchy
         public int Depth;
 
         private bool _isDragging;
-        private const int IndentUnitWidth = 35;
+        private const int IndentUnitWidth = 25;
         private HierarchyItemData _data;
 
         public IObservable<HierarchyItemData> OnLeftClick => _text.OnPointerDownAsObservable()
@@ -58,6 +58,8 @@ namespace Previz.Hierarchy
             _indentObject.sizeDelta = new Vector2(depth * IndentUnitWidth, _indentObject.sizeDelta.y);
             Depth = depth;
 
+            _underAreaImage.rectTransform.offsetMin = new Vector2 (depth * IndentUnitWidth,-4);
+            
             _underAreaImage.OnPointerExitAsObservable()
                 .Where(_ => Math.Abs(_underAreaImage.color.a - 1) < 0.001)
                 .Subscribe(_ =>
