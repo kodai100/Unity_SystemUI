@@ -112,6 +112,18 @@ namespace Previz.Hierarchy
             UpdateSelectItem(movedItem.Id);
         }
 
+        public IEnumerator DropInItem(HierarchyItemData droppedInItem, Guid? parentItemId)
+        {
+            DeleteItem(droppedInItem.Id);
+
+            yield return null;
+            
+            var parentView = GetComponentsInChildren<HierarchyItemView>().SingleOrDefault(x => x.ItemId == parentItemId);
+            AddItem(droppedInItem, parentView ? parentView.transform.childCount : _rootRectTransform.transform.childCount, parentView); // TODO: parentView渡す必要なくない？
+            if (parentView != null) parentView.HideHoverImage();
+            UpdateSelectItem(droppedInItem.Id);
+        }
+
         public void UpdateSelectItem(Guid id)
         {
             if (_selectingView != null) _selectingView.UnSelect();

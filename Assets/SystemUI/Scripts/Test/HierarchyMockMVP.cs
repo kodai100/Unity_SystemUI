@@ -27,7 +27,7 @@ namespace inc.stu.SystemUI.Tests
             _presenter = new HierarchyPresenter(_testHierarchyView);
             _presenter.Setup(_model.HierarchyEntityList.Value.ToArray());
 
-            // _presenter.OnItemDroppedIn.Subscribe(x => _model.).AddTo(_disposables);
+            _presenter.OnItemDroppedIn.Subscribe(x => _model.DropInEntity(x.MoveItemId, x.ParentItemId)).AddTo(_disposables);
             _presenter.OnItemInserted.Subscribe(x => _model.InsertEntity(x.MoveItemId, x.AboveItemId)).AddTo(_disposables);
             _presenter.OnClickEntity.Subscribe(x => _model.UpdateSelectedEntity(x)).AddTo(_disposables);;
             _presenter.OnDeleteEntity.Subscribe(_model.RemoveEntity).AddTo(_disposables);;
@@ -43,7 +43,7 @@ namespace inc.stu.SystemUI.Tests
             }).AddTo(_disposables);;
             _model.OnDeleteEntity.Subscribe(x => _presenter.RemoveEntity(x)).AddTo(_disposables);;
             _model.OnInsertEntity.Subscribe(x => _presenter.InsertEntity(x.entity, x.parentId, x.index)).AddTo(_disposables);
-
+            _model.OnDropInEntity.Subscribe(x => _presenter.DropInEntity(x.entity, x.parentEntity)).AddTo(_disposables);
         }
 
 
@@ -110,6 +110,11 @@ namespace inc.stu.SystemUI.Tests
         {
             _testHierarchyView.InsertItem(entity, parentId, index);
         }
+        
+        public void DropInEntity(HierarchyEntity entity, HierarchyEntity parentEntity)
+        {
+            _testHierarchyView.DropInItem(entity, parentEntity);
+        }
 
     }
     
@@ -117,18 +122,22 @@ namespace inc.stu.SystemUI.Tests
     public class HierarchyModel
     {
 
-        private ReactiveProperty<List<HierarchyEntity>> _hierarchyEntityList = new();
+        private readonly ReactiveProperty<List<HierarchyEntity>> _hierarchyEntityList = new();
         public IReadOnlyReactiveProperty<List<HierarchyEntity>> HierarchyEntityList => _hierarchyEntityList;
-        private ReactiveProperty<HierarchyEntity> _selectedEntity = new();
+        
+        private readonly ReactiveProperty<HierarchyEntity> _selectedEntity = new();
         public IReadOnlyReactiveProperty<HierarchyEntity> OnSelectedEntityChanged => _selectedEntity;
         
-        private Subject<(HierarchyEntity entity, Guid? parentId, int index)> _onInsertEntity = new();
+        private readonly Subject<(HierarchyEntity entity, Guid? parentId, int index)> _onInsertEntity = new();
         public IObservable<(HierarchyEntity entity, Guid? parentId, int index)> OnInsertEntity => _onInsertEntity;
 
-        private Subject<HierarchyEntity> _onDeleteEntity = new();
+        private readonly Subject<(HierarchyEntity entity, HierarchyEntity parentEntity)> _onDropInEntity = new();
+        public IObservable<(HierarchyEntity entity, HierarchyEntity parentEntity)> OnDropInEntity => _onDropInEntity;
+
+        private readonly Subject<HierarchyEntity> _onDeleteEntity = new();
         public IObservable<HierarchyEntity> OnDeleteEntity => _onDeleteEntity;
         
-        private Subject<HierarchyEntity> _onAddEntity = new();
+        private readonly Subject<HierarchyEntity> _onAddEntity = new();
         public IObservable<HierarchyEntity> OnAddEntity => _onAddEntity;
 
         public HierarchyModel()
@@ -210,16 +219,31 @@ namespace inc.stu.SystemUI.Tests
             _selectedEntity.Value = newFixtureEntity;
         }
 
-        // public void DropInEntity(Guid itemId, Guid parentId, int index)
-        // {
-        //     var targetEntity = GetEntityRecursive(itemId, null, _hierarchyEntityList.Value);
-        //     
-        //     if(targetEntity.entity == null) return;
-        //
-        //     var targetParentEntity = GetEntityRecursive(parentId, null, _hierarchyEntityList.Value);
-        //
-        //     targetParentEntity.entity?.Children.Insert(0, targetEntity.entity);
-        // }
+        public void DropInEntity(Guid itemId, Guid? parentId)
+        {
+            var targetEntity = GetEntityRecursive(itemId, null, _hierarchyEntityList.Value);
+            
+            if(targetEntity.entity == null) return;
+
+            if (parentId == null)
+            {
+                // TODO: トップノードに追加する
+                _hierarchyEntityList.Value.Add(targetEntity.entity);
+                _hierarchyEntityList.SetValueAndForceNotify(_hierarchyEntityList.Value);
+                _onDropInEntity.OnNext((targetEntity.entity, null));
+                return;
+            }
+            
+            var targetParentEntity = GetEntityRecursive(parentId.Value, null, _hierarchyEntityList.Value);
+
+            if (targetParentEntity.entity == null) return;
+
+            targetParentEntity.entity.Children ??= new List<HierarchyEntity>();
+            targetParentEntity.entity.Children.Add(targetEntity.entity);
+            
+            _hierarchyEntityList.SetValueAndForceNotify(_hierarchyEntityList.Value);
+            _onDropInEntity.OnNext((targetEntity.entity, targetParentEntity.entity));
+        }
 
         public void InsertEntity(Guid targetId, Guid? aboveItemId)
         {

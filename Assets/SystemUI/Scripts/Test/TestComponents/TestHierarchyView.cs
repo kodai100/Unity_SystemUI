@@ -59,6 +59,16 @@ namespace inc.stu.SystemUI.Tests
             StartCoroutine(_hierarchyView.InsertItem(itemData, parentId, index));
         }
 
+        public void DropInItem(HierarchyEntity entity, HierarchyEntity parentEntity)
+        {
+            var itemData = new HierarchyItemData()
+            {
+                Id = entity.Id,
+                Name = entity.Name
+            };
+            StartCoroutine(_hierarchyView.DropInItem(itemData, parentEntity?.Id));
+        }
+        
         public void RenameFixture(Guid id, string name)
         {
             _hierarchyView.RenameItem(id, name);
